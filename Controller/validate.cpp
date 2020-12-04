@@ -104,6 +104,11 @@ bool validDish(char *str, int quantity, char *name)
               return false;
 		   }
 		   pushOrder(createOrder(currDish->name, quantity, currDish->price), name);
+		   currDish->quantity -= quantity; //decrease the dish quantity
+		   if(currDish->quantity == 0) //if current dish quantity reach zero then remove it
+		   {
+		   	  bool trash = validDeletingDish(currDish->name);
+		   }
            return true;
 		}
 		currDish = currDish->next;
