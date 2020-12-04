@@ -13,7 +13,7 @@ struct Order {
 
 struct Customer {
     char name[255];
-    Order *headOrder, *tailOrder;
+    Order *headOrder, *tailOrder, *currOrder;
     Customer *prev, *next;    
 }*headCustomer[26], *tailCustomer[26], *currCustomer;
 

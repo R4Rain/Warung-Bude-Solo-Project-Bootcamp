@@ -355,10 +355,12 @@ Order *createOrder(char *str, int quantity, int price)
 
 void pushOrder(struct Order *temp, char *name)
 {
+	int flag;
 	for(int i = 0;i < 26;i++){
 	currCustomer = headCustomer[i];
 	while(currCustomer)
 	{
+		 flag = 0;
 		 if(strcmp(currCustomer->name, name) == 0)
 		 {
             if(!currCustomer->headOrder)
@@ -368,10 +370,25 @@ void pushOrder(struct Order *temp, char *name)
 			}
 			else
 			{
+			   currCustomer->currOrder = currCustomer->headOrder;
+			   while(currCustomer->currOrder)
+			   {
+			   	  if(strcmp(currCustomer->currOrder->name, temp->name) == 0) //check if the new order food has a same name
+			   	  {
+			   	  	 currCustomer->currOrder->quantity += temp->quantity; //then just add the quantity
+			   	  	 flag = 1;
+			   	  	 break;
+				  }
+				  currCustomer->currOrder = currCustomer->currOrder->next;
+			   }
+			   if(flag == 0) //if the new order food has no same name, then push new order (push tail)
+			   {
                currCustomer->tailOrder->next = temp;
 			   temp->prev = currCustomer->tailOrder;
 			   currCustomer->tailOrder = temp;
+	           }
 			}
+			break;
 		 }
 		 currCustomer = currCustomer->next;
 	}
