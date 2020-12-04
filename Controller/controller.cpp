@@ -4,7 +4,7 @@
 #include<time.h>
 #include "../Models/models.cpp"
 
-void clear(void)
+void clear(void) //Cool Clear function :3
 {
 #ifdef _WIN32
     system("cls");
@@ -44,20 +44,20 @@ void addDish(){
    printf("Insert the name of the dish [Lowercase letters]: ");
    getchar();
    scanf("%[^\n]", &name);
-   }while(!validName(name));
+   }while(!validName(name)); //Validating the name
    
    do
    {
    printf("Insert the price of the dish [1000..50000]: ");
    scanf("%d", &price);
-   }while(!validPrice(price));
+   }while(!validPrice(price)); //Validating the price
 
    do{
    printf("Insert the quantity of the dish [1..999]: ");
    scanf("%d", &quantity);
-   }while(!validQuantity(quantity));
+   }while(!validQuantity(quantity)); //Validating the quantity
     
-   pushDish(createDish(name, price, quantity));
+   pushDish(createDish(name, price, quantity)); //Push Dish
    puts("The dish has been added!");
    puts("Press enter to continue...");
    getchar();
@@ -92,7 +92,7 @@ void popTailDish()
 	}
 }
 
-int findLongestName(int *num)
+int findLongestName(int *num) //Find the longest name length
 {
 	int leng, max = 0;
 	currDish = headDish;
@@ -104,16 +104,16 @@ int findLongestName(int *num)
 		max = leng;
 	}
 	currDish = currDish->next;
-	(*num)++;
+	(*num)++; //to find how many dishes in the table 
     }
-    if(max < 4)
+    if(max < 4) //Since 'name' (length is 4) then if max less than 4, then change it to 4.
     {
     	max = 4;
 	}
     return max;
 }
 
-int findLengthNum(int i, int ctr)
+int findLengthNum(int i, int ctr) //find length number (ex: 50 = length is 2)
 {
 	while(i > 0)
 	{
@@ -163,33 +163,33 @@ void printDish()
 	int num = 1, maxLengthName, maxLengthNum, totalLength, extraSpace;
 	maxLengthName = findLongestName(&num);
 	maxLengthNum = findLengthNum(num, 1);
-    if(maxLengthNum < 3)
+    if(maxLengthNum < 3) //Since 'No.' (length is 3) then if maxLengthNum is less than 3, then change it to 3
     {
     	maxLengthNum = 3;
 	}
 	totalLength = maxLengthName + maxLengthNum + 21;
 	printCenter((char*)"Bude's Menu", totalLength);
 	puts("");
-	while(totalLength--)
+	while(totalLength--) 
 	{
 		printf("=");
 	}
 	puts("");
 	printf(" No.");
-	extraSpace = maxLengthNum - 2;
+	extraSpace = maxLengthNum - 2; 
 	printSpace(extraSpace);
 	printCenter((char*)"Name", maxLengthName);
 	printf(" Quantity ");
 	printf("  Price  ");
 	puts(" ");
-	maxLengthNum++;
+	maxLengthNum++; //there is atleast 1 extraspace then do the increment
 	currDish = headDish;
 	int i = 1;
 	while(currDish)
 	{
 		printf(" %d.", i);
 		extraSpace = maxLengthNum - findLengthNum(i, 1);
-		printSpace(extraSpace);
+		printSpace(extraSpace); //some extra space
 		printCenter(currDish->name, maxLengthName);
 		printf(" ");
 		printNumber(currDish->quantity, 1);
@@ -206,7 +206,7 @@ void tableDish()
 {
 	clear();
 	char name[255];
-	if(!headDish)
+	if(!headDish) //No dish
 	{
 		puts("There is no dish in the menu!\n");
 	}
@@ -219,7 +219,7 @@ void tableDish()
 	printf("Insert dish's name to be deleted: ");
 	getchar();
 	scanf("%[^\n]", name);
-	}while(!validDeletingDish(name));
+	}while(!validDeletingDish(name)); //Check if there is a dish
 	puts("The dish has been removed");
     }
 	puts("Press enter to continue...");
@@ -235,7 +235,7 @@ Customer *createCustomer(char *name)
 	return temp;
 }
 
-unsigned long long int djb3(char *str)
+unsigned long long int djb3(char *str) //DJB 3
 {
 
         unsigned long long int djb3 = 5381, c;
@@ -256,7 +256,7 @@ void pushCustomer(struct Customer *temp, int hash)
 	{
 		headCustomer[hash] = tailCustomer[hash] = temp;
 	}
-	totalCustomer++;
+	totalCustomer++; //increase total customer
 }
 
 void addCustomer()
@@ -269,7 +269,7 @@ void addCustomer()
 	  printf("Insert the customer's name [Without space]: ");
 	  getchar();
 	  scanf("%[^\n]", name);
-	}while(!validCustomer(name) || validCustomerPresent(name));
+	}while(!validCustomer(name) || validCustomerPresent(name)); //Validating name and check if name is duplicate or not
 	
 	hash = djb3(name);
 	pushCustomer(createCustomer(name), hash);
@@ -302,31 +302,31 @@ void printCustomer()
 		flag = 0;
 		while(currCustomer)
 		{
-		    if(flagTitle == 0)
+		    if(flagTitle == 0) //If there is atleast one customer, then print the title
 		    {
 		            puts("Customer List");
 		            flagTitle = 1;
 			}
-			if(flag == 0)
+			if(flag == 0) //If this is the first customer
 			{
 				    printf("%d. ", i);
 					printf("%s", currCustomer->name);
 					flag = 1;
 			}
-			else
+			else //After print the first customer
 			{
-					printf(" -> ");
+					printf(" -> "); //For chaining
 					printf("%s", currCustomer->name);
 			}
 			currCustomer = currCustomer->next;
 		}
 		if(flag == 1)
 		{
-			puts("");
+			puts(""); //print newline if customer is printed before
 		}
 	}
 	
-	if(flagTitle == 0)
+	if(flagTitle == 0) //If title is not printed, then no customer!
 	{
 		puts("There is no customer in the warteg!");
 	}
@@ -363,7 +363,7 @@ void pushOrder(struct Order *temp, char *name)
 		 {
             if(!currCustomer->headOrder)
 			{
-			   totalOrder++;
+			   totalOrder++; //If this is the first order for every customer, then increase the total order
                currCustomer->headOrder = currCustomer->tailOrder = temp;
 			}
 			else
@@ -383,11 +383,11 @@ void orderDish()
 	clear();
 	char name[255], dish[255];
 	int amount;
-	if(!headDish)
+	if(!headDish) //No dish
 	{
 		puts("There is no dish in the menu!\n");
 	}
-	else if(totalCustomer <= 0)
+	else if(totalCustomer <= 0) //No customer
 	{
 		puts("There is no customer in the warteg!\n");
 	}
@@ -398,7 +398,7 @@ void orderDish()
 	getchar();
     printf("Insert the customer's name: ");
 	scanf("%[^\n]", name);
-	}while(!validCustomerPresent(name));
+	}while(!validCustomerPresent(name)); //Valid customer is present
    
     printf("Insert amount of dish: ");
 	scanf("%d", &amount);
@@ -409,7 +409,7 @@ void orderDish()
 		getchar();
 		printf("[%d] Insert the dish's name and quantity: ", i + 1);
 		scanf("%[^\n]", dish);
-		}while(!validDishQuantity(dish, name));
+		}while(!validDishQuantity(dish, name)); //Valid the string of name dish and quantity
 	}
 	puts("Order success!");
     }
@@ -432,7 +432,7 @@ void removeCustomer(int i)
 		free(headCustomer[i]);
 		headCustomer[i] = temp;
 	}	
-	totalCustomer--;
+	totalCustomer--; //Since customer is removed, then decrease totalCustomer and totalOrder
 	totalOrder--;
 }
 
@@ -440,7 +440,7 @@ void paymentOrder()
 {
    clear();
    int index, i = 1, total = 0;
-   if(totalOrder <= 0)
+   if(totalOrder <= 0) //No order yet
    {
    	 puts("Customers have not ordered yet!\n");
    }
@@ -450,7 +450,7 @@ void paymentOrder()
    {
    	 printf("Insert the customer index: ");
    	 scanf("%d", &index);
-   }while(index < 0 || index > 25 || !validIndex(index));
+   }while(index < 0 || index > 25 || !validIndex(index)); //Valid index (index must be 0 .. 25)
    
    printf("%s\n", headCustomer[index]->name);
    currOrder = headCustomer[index]->headOrder;

@@ -32,7 +32,7 @@ bool validQuantity(int quantity)
     return true;
 }
 
-bool validDeletingDish(char *name)
+bool validDeletingDish(char *name) //Valid then delete dish
 {
 	if(strcmp(headDish->name, name) == 0)
 	{
@@ -99,7 +99,7 @@ bool validDish(char *str, int quantity, char *name)
 	{
         if(strcmp(currDish->name, str) == 0)
 		{
-		   if(quantity < 1 || quantity > currDish->quantity)
+		   if(quantity < 1 || quantity > currDish->quantity) //quantity cannot be less than one (quantity 1..99) and quantity cannot be more than the quantity of the dish
 		   {
               return false;
 		   }
@@ -111,7 +111,7 @@ bool validDish(char *str, int quantity, char *name)
 	return false;
 }
 
-int dishQuantity(char *str)
+int dishQuantity(char *str) //quantity is in string, then we need to convert to integer
 {
    int leng = strlen(str), power = 1, quantity = 0;
    for(int i = leng-1;i>=0;i--)
@@ -129,22 +129,22 @@ bool validDishQuantity(char *str, char *name)
    int leng = strlen(str), idxStr = 0, idxNum = 0, flagNum = 0;
    for(int i = 0;i < leng;i++)
    {
-	   if(str[i] == 'x' && i + 1 < leng && str[i+1] >= '0' && str[i+1] <= '9')
+	   if(str[i] == 'x' && i + 1 < leng && str[i+1] >= '0' && str[i+1] <= '9') //if the next character 'x' is a number
 	   {
           flagNum = 1;
 	   }
-	   else if(flagNum == 1 && str[i] >= '0' && str[i] <= '9')
+	   else if(flagNum == 1 && str[i] >= '0' && str[i] <= '9') //after character 'x', then put the character number in numTemp
 	   {
           numTemp[idxNum++] = str[i];
 	   }
-	   else
+	   else //put the character name in strTemp
 	   {
 		  strTemp[idxStr++] = str[i];
 	   }
    }
-   if(idxStr > 0 && strlen(numTemp) < 4)
+   if(idxStr > 0 && strlen(numTemp) < 4) //if the idxStr > 0 (atleast there is a character), and numTemp < 4 (because the max quantity is 999 which the max length is 3)
    {
-       strTemp[idxStr - 1] = '\0';
+       strTemp[idxStr - 1] = '\0'; //remove space behind x (ex: telur x4) then become telur
 	   if(validDish(strTemp, dishQuantity(numTemp), name)){
 		   return true;
 	   }else{
