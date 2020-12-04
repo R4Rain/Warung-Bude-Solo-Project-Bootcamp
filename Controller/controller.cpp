@@ -421,6 +421,11 @@ void orderDish()
 	scanf("%d", &amount);
 	for(int i = 0;i < amount;i++)
 	{
+		if(!headDish) //if there is no more stock left
+		{
+			puts("There is no more stock left!");
+			break;
+		}
 		do
 		{
 		getchar();
